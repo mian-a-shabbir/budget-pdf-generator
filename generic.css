@@ -1,0 +1,17 @@
+/*
+*   CSS file for generic styles such as paddings, margins, height, and width
+*/
+
+/* paddings */
+.padding-8 {
+    padding: 8px;
+}
+
+.padding-16 {
+    padding: 16px;
+}
+
+.padding-24 {
+    padding: 24px;
+}
+
