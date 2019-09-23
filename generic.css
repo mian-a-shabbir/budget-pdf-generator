@@ -17,6 +17,22 @@
 
 
 /* margins */
+.margin-auto {
+    margin: auto;
+}
+
+.mt-5 {
+    margin-top: 5px;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
 .my-10 {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -30,4 +46,37 @@
 .my-30 {
     margin-top: 30px;
     margin-bottom: 30px;
+}
+
+/* widths */
+.width-50 {
+    width: 50px;
+}
+
+.width-100 {
+    width: 100px;
+}
+
+.width-150 {
+    width: 150px;
+}
+
+.width-200 {
+    width: 200px;
+}
+
+.width-250 {
+    width: 250px
+}
+
+.width-300 {
+    width: 300px;
+}
+
+.width-350 {
+    width: 350px;
+}
+
+.width-400 {
+    width: 400px;
 }
