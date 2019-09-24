@@ -10,31 +10,42 @@
     <link rel="stylesheet" href="generic.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
   </head>
-  <body class="has-background-black">
+  <body class="has-background-black height-100-vh">
     
     <header class="hero padding-8 is-bold is-dark has-text-centered is-size-3 has-text-weight-bold">The Budget Calculator</header>
     
     <main>
+      <div id="total-amount" class="has-text-centered"></div>
       <div class="field is-horizontal mt-10">
           <div class="margin-auto has-text-centered">
             <div class="select mt-10">
               <select>
-                <option val="add">+</option>
-                <option val="subtract">-</option>
+                <option value="add">+</option>
+                <option value="subtract">-</option>
               </select>   
             </div>
             <input class="input width-300 mt-10" type="text" placeholder="Add Description">
             <input class="input width-150 mt-10" type="number" placeholder="Enter Amount"> 
-            <a class="button is-success is-outlined mt-10">Add To Budget</a>
+            <button class="button is-success is-outlined mt-10" id="add-btn">Add To Budget</button>
           </div>
       </div>
 
       <div class="columns">
         <div class="column">
-          
+          <div class="columns mt-10 has-text-centered">
+            <div class="column has-text-success">
+              <h2>Income</h2>
+              <div id="income-list"></div>
+            </div>
+            <div class="column has-text-danger">
+              <h2>Expenses</h2>
+              <div id="expense-list"></div>
+            </div>
+          </div>
         </div>
         <div class="column"></div>
       </div>
     </main>
   </body>
 </html>
+<script src="app.js"></script>
