@@ -19,13 +19,13 @@
       <div class="field is-horizontal mt-10">
           <div class="margin-auto has-text-centered">
             <div class="select mt-10">
-              <select>
-                <option value="add">+</option>
-                <option value="subtract">-</option>
+              <select id="amount-type">
+                <option value="income">+</option>
+                <option value="expense">-</option>
               </select>   
             </div>
-            <input class="input width-300 mt-10" type="text" placeholder="Add Description">
-            <input class="input width-150 mt-10" type="number" placeholder="Enter Amount"> 
+            <input class="input width-300 mt-10" id="description" type="text" placeholder="Add Description">
+            <input class="input width-150 mt-10" id="amount" type="number" placeholder="Enter Amount"> 
             <button class="button is-success is-outlined mt-10" id="add-btn">Add To Budget</button>
           </div>
       </div>
@@ -33,12 +33,12 @@
       <div class="columns">
         <div class="column">
           <div class="columns mt-10 has-text-centered">
-            <div class="column has-text-success">
-              <h2>Income</h2>
+            <div class="column has-text-success mx-20">
+              <h2 class="has-text-left-mobile my-20">Income</h2>
               <div id="income-list"></div>
             </div>
-            <div class="column has-text-danger">
-              <h2>Expenses</h2>
+            <div class="column has-text-danger mx-20">
+              <h2 class="has-text-left-mobile my-20">Expenses</h2>
               <div id="expense-list"></div>
             </div>
           </div>
