@@ -12,6 +12,14 @@ let budgetController = (function() {
         this.amount = amount;
     };
 
+    let calculateTotal = function(type) {
+        let sum = 0;
+        data.items[type].forEach(function(el) {
+            sum += el.amount;
+        });
+        data.totals[type] = sum;
+    };
+
     let data = {
         items: {
             expense: [],
@@ -20,7 +28,9 @@ let budgetController = (function() {
         totals: {
             expense: 0,
             income: 0,
-        }
+        },
+        budget: 0,
+        percentage: -1
     };
 
     return {
@@ -43,6 +53,42 @@ let budgetController = (function() {
             return newItem;
         },
 
+        deleteItem: function(type, id) {
+            let ids, index;
+            ids = data.items[type].map(function(current) {
+                return current.id;
+            });
+
+            index = ids.indexOf(id);
+
+            if(index !== -1) {
+                data.items[type].splice(index, 1);
+            }
+
+        },
+
+        calculateBudget: function() {
+            calculateTotal('expense');
+            calculateTotal('income');
+
+            data.budget = data.totals.income - data.totals.expense;
+            if(data.totals.income > 0) {
+                data.percentage = Math.round((data.totals.expense / data.totals.income) * 100);
+            } else {
+                data.percentage = -1;
+            }
+
+        },
+
+        getBudget: function() {
+            return {
+                budget: data.budget,
+                totalIncome: data.totals.income,
+                totalExpense: data.totals.expense,
+                percentage: data.percentage
+            }
+        },
+
         testing: function() {
             console.log(data);
         }
@@ -58,32 +104,32 @@ let UIController = (function() {
             return {
                 type: document.getElementById('amount-type').value,
                 description: document.getElementById('description').value,
-                amount: document.getElementById('amount').value
+                amount: parseFloat(document.getElementById('amount').value)
             }
         },
         addListItems: function(obj, type) {
             let html, newHtml, element;
 
             if(type === 'income') {
-                element = 'income-list';
+                element = 'list-income';
                 html = `
                 <div class="has-text-success border-success columns is-mobile" id="income-%id%">
-                    <div class="column margin-auto has-text-left">%description%</div>
-                    <div class="column margin-auto has-text-left">%amount%</div>
-                    <div class="column has-text-right">
-                        <button class="button is-danger">
-                            <i class="fas fa-window-close"></i>
+                    <div class="column is-6 margin-auto has-text-left">%description%</div>
+                    <div class="column is-3 margin-auto has-text-left">%amount%</div>
+                    <div class="column is-3 margin-auto">
+                        <button class="button is-small is-danger">
+                            x
                         </button>
                     </div>
                 </div>`;
             } else if(type === 'expense') {
-                element = 'expense-list';
+                element = 'list-expense';
                 html = `<div class="has-text-danger border-danger columns is-mobile" id="expense-%id%">
-                    <div class="column margin-auto has-text-left">%description%</div>
-                    <div class="column margin-auto has-text-left">%amount%</div>                    
-                    <div class="column has-text-right">
-                        <button class="button is-danger">
-                            <i class="fas fa-window-close"></i>
+                    <div class="column is-6 margin-auto has-text-left">%description%</div>
+                    <div class="column is-3 margin-auto has-text-left">%amount%</div>                    
+                    <div class="column is-3 margin-auto">
+                        <button class="button is-small is-danger">
+                            x
                         </button>
                     </div>
                 </div>`;
@@ -94,6 +140,29 @@ let UIController = (function() {
             newHtml = newHtml.replace('%amount%', obj.amount);
 
             document.getElementById(element).insertAdjacentHTML('beforeend', newHtml);
+         },
+
+         deleteListItem: function(selectorID) {
+             let el = document.getElementById(selectorID);
+            el.parentNode.removeChild(el);
+         },
+
+         clearFields: function() {
+             document.getElementById('description').value = '';
+             document.getElementById('amount').value = '';
+             document.getElementById('description').focus();             
+         },
+
+         displayBudget: function(obj) {
+            document.getElementById('total-budget').textContent = obj.budget;
+            document.getElementById('total-income').textContent = obj.totalIncome;
+            document.getElementById('total-expense').textContent = obj.totalExpense;
+
+            if(obj.percentage > 0) {
+                document.getElementById('total-percentage').textContent = obj.percentage + '%';
+            } else {
+                document.getElementById('total-percentage').textContent = '---';
+            }
          },
     }
 })();
@@ -108,7 +177,16 @@ let appController = (function(budget, ui) {
                 addItem();
             }
         });
+        document.getElementById('lists-container').addEventListener('click', deleteItem);
     }
+
+    let updateBudget = function() {
+        budgetController.calculateBudget();
+
+        let budget = budgetController.getBudget();
+
+        ui.displayBudget(budget);
+    };
 
     let addItem = function() {
         let input, newItem;
@@ -117,12 +195,40 @@ let appController = (function(budget, ui) {
         
         newItem = budget.addNewItem(input.type,input.description,input.amount);
 
-        ui.addListItems(newItem, input.type);
+        if(input.description !== "" && !isNaN(input.amount) && input.amount > 0) {
+            ui.addListItems(newItem, input.type);
+            ui.clearFields();
+            updateBudget();
+        }
+    };
+
+    let deleteItem = function(e) {
+        let itemID, splitID, type, ID;
+
+        itemID = e.target.parentNode.parentNode.id;
+        if(itemID) {
+            splitID = itemID.split('-');
+            type = splitID[0];
+            ID = parseInt(splitID[1]);
+
+            if(type === "income" || type === "expense"){
+                budget.deleteItem(type, ID);
+                ui.deleteListItem(itemID);
+                updateBudget();
+            }
+
+        }
     };
 
     return {
         init: function() {
             setEventListeners();
+            ui.displayBudget({
+                budget: 0,
+                totalIncome: 0,
+                totalExpense: 0,
+                percentage: -1
+            });
         }
     }
 
