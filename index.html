@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="generic.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
   </head>
-  <body class="has-background-black height-100-vh">
+  <body>
     
     <header class="hero padding-8 is-bold is-dark has-text-centered is-size-3 has-text-weight-bold">The Budget Calculator</header>
     
@@ -26,43 +26,47 @@
             </div>
             <input class="input width-300 mt-10" id="description" type="text" placeholder="Add Description">
             <input class="input width-150 mt-10" id="amount" type="number" placeholder="Enter Amount"> 
-            <button class="button is-success is-outlined mt-10" id="add-btn">Add To Budget</button>
+            <button class="button is-black is-outlined mt-10" id="add-btn">Add To Budget</button>
           </div>
       </div>
 
       <div class="columns">
-        <div class="column is-7" id="lists-container">
-          <div class="columns mt-10 has-text-centered">
-            <div class="column has-text-success mx-20">
-              <h2 class="has-text-left-mobile my-20">Income</h2>
-              <div id="list-income"></div>
+
+          <div class="column is-5">
+
+            <div class="box lg-pink-blue width-300 margin-auto my-30 padding-24">
+                  
+                <div class="columns is-mobile">
+                  <div class="column has-text-left">Total Income</div>
+                  <div id="total-income" class="column"></div>
+                </div>
+        
+                <div class="columns is-mobile">
+                  <div class="column has-text-left">Total Expenses</div>
+                  <div id="total-expense" class="column is-4"></div>
+                  <div class="column is-2" id="total-percentage"></div>
+                </div>
+  
+                <div class="columns is-mobile">
+                    <div class="column has-text-left">Balance</div>
+                    <div id="total-budget" class="column"></div>
+                </div>
+    
             </div>
-            <div class="column has-text-danger mx-20">
-              <h2 class="has-text-left-mobile my-20">Expenses</h2>
-              <div id="list-expense"></div>
+
+          </div>
+
+        <div class="column is-7" id="lists-container">
+          <div class="columns my-30 has-text-centered">
+            <div class="column lg-pink-blue margin-20 br-6">
+              <h2 class="has-text-left-mobile has-text-weight-semibold">Income</h2>
+              <div id="list-income" class="mb-10"></div>
+            </div>
+            <div class="column lg-pink-blue margin-20 br-6">
+              <h2 class="has-text-left-mobile has-text-weight-semibold">Expenses</h2>
+              <div id="list-expense" class="mb-10"></div>
             </div>
           </div>
-        </div>
-
-        <div class="column is-5">
-
-          <div class="box has-background-light has-background-dark has-text-white width-300 margin-auto my-30 padding-24">
-              <div class="columns is-mobile">
-                <div class="column has-text-left">Budget</div>
-                <div id="total-budget" class="column"></div>
-              </div>
-              
-              <div class="columns is-mobile">
-                <div class="column has-text-left">Total Income</div>
-                <div id="total-income" class="column"></div>
-              </div>
-      
-              <div class="columns is-mobile">
-                <div class="column has-text-left">Total Expenses</div>
-                <div id="total-expense" class="column is-4"></div>
-                <div class="column is-2" id="total-percentage"></div>
-              </div>
-            </div>
         </div>
 
       </div>
