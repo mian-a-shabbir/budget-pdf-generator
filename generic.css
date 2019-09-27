@@ -21,6 +21,10 @@
     margin: auto;
 }
 
+.margin-20 {
+    margin: 20px;
+}
+
 .mt-5 {
     margin-top: 5px;
 }
@@ -51,9 +55,20 @@
     margin-top: 30px;
     margin-bottom: 30px;
 }
+.mx-5 {
+    margin: 0 5px;
+}
+
+.mx-10 {
+    margin: 0 10px;
+}
 
 .mx-20 {
     margin: 0 20px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
 }
 
 /* widths */
@@ -106,4 +121,37 @@
 
 .border-success {
     border: 1px solid#23d160!important;
+}
+
+.border-grey {
+    border: 1px solid grey;
+}
+
+/* set full background color to black */
+html{
+    background-image: linear-gradient(to left, orange, coral)
+}
+
+/* linear gradients */
+
+.lg-pink-blue {
+    background-image: linear-gradient(to right, pink, lightblue);
+    -moz-box-shadow: 0 0 3px #000;
+    -webkit-box-shadow: 0 0 3px #000;
+    box-shadow: 0 0 3px #000;
+}
+
+.item-list:hover {
+    background-color:rgba(0, 0, 0, 0.1);
+}
+
+
+/* border radius */
+
+.br-6 {
+    border-radius: 6px;
+}
+
+main {
+    margin: 25px;
 }
