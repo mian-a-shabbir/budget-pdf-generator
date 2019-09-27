@@ -113,7 +113,7 @@ let UIController = (function() {
             if(type === 'income') {
                 element = 'list-income';
                 html = `
-                <div class="has-text-success border-success columns is-mobile" id="income-%id%">
+                <div class="border-grey item-list mx-5 br-6 columns is-mobile" id="income-%id%">
                     <div class="column is-6 margin-auto has-text-left">%description%</div>
                     <div class="column is-3 margin-auto has-text-left">%amount%</div>
                     <div class="column is-3 margin-auto">
@@ -124,7 +124,7 @@ let UIController = (function() {
                 </div>`;
             } else if(type === 'expense') {
                 element = 'list-expense';
-                html = `<div class="has-text-danger border-danger columns is-mobile" id="expense-%id%">
+                html = `<div class="border-grey item-list mx-5 br-6 columns is-mobile" id="expense-%id%">
                     <div class="column is-6 margin-auto has-text-left">%description%</div>
                     <div class="column is-3 margin-auto has-text-left">%amount%</div>                    
                     <div class="column is-3 margin-auto">
