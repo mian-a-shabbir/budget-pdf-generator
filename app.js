@@ -91,14 +91,15 @@ let budgetController = (function() {
 
         testing: function() {
             console.log(data);
-        }
+        },
+
     };
 
 })();
 
 
 let UIController = (function() {
-    
+    let myChart;
     return {
         getInput: function() {
             return {
@@ -164,6 +165,53 @@ let UIController = (function() {
                 document.getElementById('total-percentage').textContent = '---';
             }
          },
+
+         buildChart: function(income,expense) {
+            if (myChart) {
+                myChart.destroy();
+            }
+            let ctx, labels, data, dataset;
+            ctx = document.getElementById('myChart').getContext('2d');
+            labels = ['Income', 'Expense'];
+            dataset = [income, expense];
+            data = {
+                labels: labels,
+                datasets: [{
+                    data: dataset,
+                    backgroundColor: [
+                        '#0b8793',
+                        '#fe8c00'
+                    ],
+                    borderColor: [
+                        '#6f0000',
+                        '#6f0000'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            myChart = new Chart(ctx, {
+                type: 'pie',
+                data: data,
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Income vs Expense',
+                        fontColor: 'white',
+                        fontSize: 14
+                    },
+                    responsive: true,
+                    legend: {
+                        labels: {
+                            fontColor: "white",
+                            fontSize: 14
+                        }
+                    }
+                }
+            });
+
+            myChart.update();
+        }
     }
 })();
 
@@ -182,10 +230,10 @@ let appController = (function(budget, ui) {
 
     let updateBudget = function() {
         budgetController.calculateBudget();
-
         let budget = budgetController.getBudget();
-
         ui.displayBudget(budget);
+        ui.buildChart(budget.totalIncome,budget.totalExpense);
+        console.log(budget.totalIncome,budget.totalExpense);
     };
 
     let addItem = function() {
@@ -193,9 +241,9 @@ let appController = (function(budget, ui) {
         
         input = ui.getInput();
         
-        newItem = budget.addNewItem(input.type,input.description,input.amount);
 
         if(input.description !== "" && !isNaN(input.amount) && input.amount > 0) {
+            newItem = budget.addNewItem(input.type,input.description,input.amount);
             ui.addListItems(newItem, input.type);
             ui.clearFields();
             updateBudget();
