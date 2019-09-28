@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
     <link rel="stylesheet" href="generic.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
   </head>
   <body>
     
@@ -20,13 +21,13 @@
           <div class="margin-auto has-text-centered">
             <div class="select mt-10">
               <select id="amount-type">
-                <option value="income">+</option>
-                <option value="expense">-</option>
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
               </select>   
             </div>
             <input class="input width-300 mt-10" id="description" type="text" placeholder="Add Description">
             <input class="input width-150 mt-10" id="amount" type="number" placeholder="Enter Amount"> 
-            <button class="button is-black is-outlined mt-10" id="add-btn">Add To Budget</button>
+            <button class="button is-black is-inverted is-outlined mt-10" id="add-btn">Add To Budget</button>
           </div>
       </div>
 
@@ -34,8 +35,7 @@
 
           <div class="column is-5">
 
-            <div class="box lg-pink-blue width-300 margin-auto my-30 padding-24">
-                  
+            <div class="box lg-navy-purple width-300 has-text-white margin-auto my-30 padding-24">
                 <div class="columns is-mobile">
                   <div class="column has-text-left">Total Income</div>
                   <div id="total-income" class="column"></div>
@@ -51,18 +51,21 @@
                     <div class="column has-text-left">Balance</div>
                     <div id="total-budget" class="column"></div>
                 </div>
-    
+            </div>
+
+            <div class="pie-chart">
+              <canvas id="myChart" width="300" height="300"></canvas>
             </div>
 
           </div>
 
         <div class="column is-7" id="lists-container">
           <div class="columns my-30 has-text-centered">
-            <div class="column lg-pink-blue margin-20 br-6">
+            <div class="column word-break lg-navy-purple has-text-white margin-20 br-6">
               <h2 class="has-text-left-mobile has-text-weight-semibold">Income</h2>
               <div id="list-income" class="mb-10"></div>
             </div>
-            <div class="column lg-pink-blue margin-20 br-6">
+            <div class="column word-break lg-navy-purple has-text-white margin-20 br-6">
               <h2 class="has-text-left-mobile has-text-weight-semibold">Expenses</h2>
               <div id="list-expense" class="mb-10"></div>
             </div>
