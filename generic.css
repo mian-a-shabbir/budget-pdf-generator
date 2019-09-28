@@ -129,13 +129,13 @@
 
 /* set full background color to black */
 html{
-    background-image: linear-gradient(to left, orange, coral)
+    background-image: linear-gradient(to right,#200122,#6f0000)
 }
 
 /* linear gradients */
 
-.lg-pink-blue {
-    background-image: linear-gradient(to right, pink, lightblue);
+.lg-navy-purple {
+    background-image: linear-gradient(to right, #1a475c, #471152);
     -moz-box-shadow: 0 0 3px #000;
     -webkit-box-shadow: 0 0 3px #000;
     box-shadow: 0 0 3px #000;
@@ -152,6 +152,18 @@ html{
     border-radius: 6px;
 }
 
+/* styles for containers */
+
 main {
     margin: 25px;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* word break */
+
+.word-break {
+    word-wrap: break-word;
 }
