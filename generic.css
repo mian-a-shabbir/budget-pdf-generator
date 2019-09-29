@@ -129,12 +129,12 @@
 
 /* set full background color to black */
 html{
-    background-image: linear-gradient(to right,#200122,#6f0000)
+    background-image: linear-gradient(to right,#283048,#859398)
 }
 
 /* linear gradients */
 
-.lg-navy-purple {
+.lg-navy {
     background-image: linear-gradient(to right, #1a475c, black);
     -moz-box-shadow: 0 0 3px #000;
     -webkit-box-shadow: 0 0 3px #000;
