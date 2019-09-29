@@ -89,6 +89,10 @@ let budgetController = (function() {
             }
         },
 
+        getData: function() {
+            return data;
+        },
+
         testing: function() {
             console.log(data);
         },
@@ -171,6 +175,8 @@ let UIController = (function() {
                 myChart.destroy();
             }
             let ctx, labels, data, dataset;
+            document.getElementById('pie-chart').style.visibility = 'visible';
+            document.getElementById('pdf-gen').style.visibility = 'visible';
             ctx = document.getElementById('myChart').getContext('2d');
             labels = ['Income', 'Expense'];
             dataset = [income, expense];
@@ -197,26 +203,38 @@ let UIController = (function() {
                     title: {
                         display: true,
                         text: 'Income vs Expense',
-                        fontColor: 'white',
-                        fontSize: 14
+                        fontColor: 'black',
+                        fontSize: 16
                     },
                     responsive: true,
                     legend: {
                         labels: {
-                            fontColor: "white",
-                            fontSize: 14
+                            fontColor: "black",
+                            fontSize: 16
                         }
                     }
                 }
             });
 
             myChart.update();
-        }
+        },
     }
 })();
 
 
 let appController = (function(budget, ui) {
+
+    let getDate = function() {
+        let d,year,day,month,date; 
+
+        d = new Date();
+        year = d.getFullYear();
+        day = d.getDate();
+        month = d.getMonth() + 1;
+        date = month + '-' + day + '-' + year;
+
+        return date;
+    };
 
     let setEventListeners = function() {
         document.querySelector('#add-btn').addEventListener('click',addItem);
@@ -226,7 +244,8 @@ let appController = (function(budget, ui) {
             }
         });
         document.getElementById('lists-container').addEventListener('click', deleteItem);
-    }
+        document.getElementById('pdf-gen').addEventListener('click',buildPDF);
+    };
 
     let updateBudget = function() {
         budgetController.calculateBudget();
@@ -268,8 +287,39 @@ let appController = (function(budget, ui) {
         }
     };
 
+    let buildPDF = function() {
+        let doc, html, pdfData;
+        pdfData = budget.getData();
+        html = '<style>tr{page-break-inside: avoid;}table{width:450px}thead{background-color:black}td{padding:12px}</style><table><thead><tr><td colspan="2" style="color:white;font-weight:600">Income</td></tr></thead>';
+        pdfData.items.income.forEach(function(el) {
+            html += '<tr><td>'+ el.description + '</td><td>' + el.amount + '</td></tr>'
+        });
+        html += '<tr><td><b>Total Income</b></td><td>'+ pdfData.totals.income + '</td></tr>';
+        html += '<thead><tr><td colspan="2" style="color:white;font-weight:600">Expense</td></tr></thead>';
+        pdfData.items.expense.forEach(function(el) {
+            html += '<tr><td>'+ el.description + '</td><td>' + el.amount + '</td></tr>'
+        });
+        html += '<tr><td><b>Total Expenses</b></td><td>'+ pdfData.totals.expense + '</td></tr>';
+        html += '<thead><tr><td style="color:white;font-weight:600">Balance</td><td style="color:white;font-weight:600">'+ pdfData.budget + '</td></tr></thead>';
+        html += '<tr></tr>';
+        html += '</table>';
+        console.log(html);
+        let e = document.createElement('div');
+        e.innerHTML = '<img width="400" height="400" src="' + document.getElementById("myChart").toDataURL("image/png", 1.0) + '">' + html;
+        let opt = {
+            margin:       [1,2],
+            filename:     'budget-'+ getDate() +'.pdf',
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
+          };
+        html2pdf(e, opt);
+    };
+
     return {
         init: function() {
+            document.getElementById('pie-chart').style.visibility = 'hidden';
+            document.getElementById('pdf-gen').style.visibility = 'hidden';
+            document.getElementById('date').textContent = getDate();
             setEventListeners();
             ui.displayBudget({
                 budget: 0,
