@@ -135,7 +135,14 @@ html{
 /* linear gradients */
 
 .lg-navy-purple {
-    background-image: linear-gradient(to right, #1a475c, #471152);
+    background-image: linear-gradient(to right, #1a475c, black);
+    -moz-box-shadow: 0 0 3px #000;
+    -webkit-box-shadow: 0 0 3px #000;
+    box-shadow: 0 0 3px #000;
+}
+
+.lg-silver-blue {
+    background-image: linear-gradient(to right, lightblue, silver);
     -moz-box-shadow: 0 0 3px #000;
     -webkit-box-shadow: 0 0 3px #000;
     box-shadow: 0 0 3px #000;
