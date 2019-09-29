@@ -10,10 +10,11 @@
     <link rel="stylesheet" href="generic.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+    <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
   </head>
   <body>
     
-    <header class="hero padding-8 is-bold is-dark has-text-centered is-size-3 has-text-weight-bold">The Budget Calculator</header>
+    <header class="hero padding-8 is-bold is-dark has-text-centered is-size-4 has-text-weight-semi-bold">The Budget Calculator<span class="is-size-5" id="date"></span></header>
     
     <main>
 
@@ -36,6 +37,7 @@
           <div class="column is-5">
 
             <div class="box lg-navy-purple width-300 has-text-white margin-auto my-30 padding-24">
+              
                 <div class="columns is-mobile">
                   <div class="column has-text-left">Total Income</div>
                   <div id="total-income" class="column"></div>
@@ -53,13 +55,14 @@
                 </div>
             </div>
 
-            <div class="pie-chart">
+            <div id="pie-chart" class="lg-silver-blue br-6 padding-8">
               <canvas id="myChart" width="300" height="300"></canvas>
             </div>
 
           </div>
 
         <div class="column is-7" id="lists-container">
+          
           <div class="columns my-30 has-text-centered">
             <div class="column word-break lg-navy-purple has-text-white margin-20 br-6">
               <h2 class="has-text-left-mobile has-text-weight-semibold">Income</h2>
@@ -70,6 +73,11 @@
               <div id="list-expense" class="mb-10"></div>
             </div>
           </div>
+
+          <div class="has-text-centered">
+            <button class="button is-black is-inverted is-outlined mt-10" id="pdf-gen">Generate PDF</button>            
+          </div>
+
         </div>
 
       </div>
