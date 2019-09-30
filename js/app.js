@@ -290,7 +290,7 @@ let appController = (function(budget, ui) {
     let buildPDF = function() {
         let doc, html, pdfData;
         pdfData = budget.getData();
-        html = '<style>tr{page-break-inside: avoid;}table{width:450px}thead{background-color:black}td{padding:12px}</style><table><thead><tr><td colspan="2" style="color:white;font-weight:600">Income</td></tr></thead>';
+        html = '<style>tr{page-break-inside: avoid;}table{width:450px}thead{background-color:black}td{padding:6px}</style><table><thead><tr><td colspan="2" style="color:white;font-weight:600">Income</td></tr></thead>';
         pdfData.items.income.forEach(function(el) {
             html += '<tr><td>'+ el.description + '</td><td>' + el.amount + '</td></tr>'
         });
@@ -307,7 +307,7 @@ let appController = (function(budget, ui) {
         let e = document.createElement('div');
         e.innerHTML = '<img width="400" height="400" src="' + document.getElementById("myChart").toDataURL("image/png", 1.0) + '">' + html;
         let opt = {
-            margin:       [1,2],
+            margin:       [0.5,2],
             filename:     'budget-'+ getDate() +'.pdf',
             html2canvas:  { scale: 2 },
             jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
