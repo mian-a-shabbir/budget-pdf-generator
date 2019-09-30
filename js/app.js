@@ -1,3 +1,4 @@
+// budgetController is responsible for performing all calculations
 let budgetController = (function() {
 
     let Expense = function(id, description, amount) {
@@ -34,6 +35,7 @@ let budgetController = (function() {
     };
 
     return {
+        // adds a new item to data object based on the type(income/expense)
         addNewItem: function(type, desc, amt) {
             let newItem, id;
             if (data.items[type].length > 0) {
@@ -53,6 +55,7 @@ let budgetController = (function() {
             return newItem;
         },
 
+        // deletes an item from data object based on type(income/expense)
         deleteItem: function(type, id) {
             let ids, index;
             ids = data.items[type].map(function(current) {
@@ -67,6 +70,7 @@ let budgetController = (function() {
 
         },
 
+        // calculates the percentage and remaining balance
         calculateBudget: function() {
             calculateTotal('expense');
             calculateTotal('income');
@@ -101,7 +105,7 @@ let budgetController = (function() {
 
 })();
 
-
+// UIController is responsibel for all DOM Maniipulations
 let UIController = (function() {
     let myChart;
     return {
@@ -112,6 +116,7 @@ let UIController = (function() {
                 amount: parseFloat(document.getElementById('amount').value)
             }
         },
+        // add a new income/expense to dom
         addListItems: function(obj, type) {
             let html, newHtml, element;
 
@@ -147,17 +152,20 @@ let UIController = (function() {
             document.getElementById(element).insertAdjacentHTML('beforeend', newHtml);
          },
 
+        // delete an item from the income/expense list
          deleteListItem: function(selectorID) {
              let el = document.getElementById(selectorID);
             el.parentNode.removeChild(el);
          },
 
+         // clear the input fields
          clearFields: function() {
              document.getElementById('description').value = '';
              document.getElementById('amount').value = '';
              document.getElementById('description').focus();             
          },
 
+         // display the total income, expenses and percentage
          displayBudget: function(obj) {
             document.getElementById('total-budget').textContent = obj.budget;
             document.getElementById('total-income').textContent = obj.totalIncome;
@@ -170,8 +178,10 @@ let UIController = (function() {
             }
          },
 
-         buildChart: function(income,expense) {
+         // builds a pie-chart using Chart.js
+         buildChart: function(income,expense) { 
             if (myChart) {
+                // destroy the chart with old data after user enters a new input
                 myChart.destroy();
             }
             let ctx, labels, data, dataset;
@@ -221,9 +231,10 @@ let UIController = (function() {
     }
 })();
 
-
+// appController uses mthods from UI and Budget Controller
 let appController = (function(budget, ui) {
 
+    // returns date in mm-dd-yyyy format
     let getDate = function() {
         let d,year,day,month,date; 
 
@@ -236,6 +247,7 @@ let appController = (function(budget, ui) {
         return date;
     };
 
+    // set event listeners for buttons and key event
     let setEventListeners = function() {
         document.querySelector('#add-btn').addEventListener('click',addItem);
         document.addEventListener('keypress', function(e) {
@@ -247,12 +259,12 @@ let appController = (function(budget, ui) {
         document.getElementById('pdf-gen').addEventListener('click',buildPDF);
     };
 
+
     let updateBudget = function() {
         budgetController.calculateBudget();
         let budget = budgetController.getBudget();
         ui.displayBudget(budget);
         ui.buildChart(budget.totalIncome,budget.totalExpense);
-        console.log(budget.totalIncome,budget.totalExpense);
     };
 
     let addItem = function() {
@@ -287,6 +299,7 @@ let appController = (function(budget, ui) {
         }
     };
 
+    // builds a PDF using html2pdf.js
     let buildPDF = function() {
         let doc, html, pdfData;
         pdfData = budget.getData();
@@ -303,7 +316,6 @@ let appController = (function(budget, ui) {
         html += '<thead><tr><td style="color:white;font-weight:600">Balance</td><td style="color:white;font-weight:600">'+ pdfData.budget + '</td></tr></thead>';
         html += '<tr></tr>';
         html += '</table>';
-        console.log(html);
         let e = document.createElement('div');
         e.innerHTML = '<img width="400" height="400" src="' + document.getElementById("myChart").toDataURL("image/png", 1.0) + '">' + html;
         let opt = {
@@ -332,4 +344,5 @@ let appController = (function(budget, ui) {
 
 })(budgetController, UIController);
 
+//initilaize the application
 appController.init();
