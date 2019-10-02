@@ -129,7 +129,7 @@
 
 /* set full background color to black */
 html{
-    background-image: linear-gradient(to right,#283048,#859398)
+    background-image: linear-gradient(to top,#283048,#859398);
 }
 
 /* linear gradients */
