@@ -12,3 +12,6 @@ The js libraries and css framework used in the project are as follows:
 - [Chart.js](https://www.chartjs.org/) is used for creating a pie-chart based on users input
 - [html2pdf.js](https://github.com/eKoopmans/html2pdf.js) is used for generating the pdf
 - [Bulma](https://bulma.io/documentation/) a CSS framework is used for designing the responsive layout of the application
+
+## Demo
+[Budget PDF Generator](https://budget-pdf.netlify.com)
